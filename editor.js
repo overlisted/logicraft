@@ -30,6 +30,5 @@ addEventListener("mousemove", e => {
 });
 
 addEventListener("mouseup", e => {
-  console.log(selectionMoving);
   if(selectionMoving) selectionMoving = false;
 });
