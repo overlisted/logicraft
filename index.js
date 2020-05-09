@@ -1,5 +1,6 @@
 import * as logic from "./logic.js"
 import {elements, updateCircuit} from "./render.js"
+import "./editor.js"
 
 elements.push(new logic.PlayerInput(90, 460));
 elements.push(new logic.PlayerInput(90, 500));

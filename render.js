@@ -30,5 +30,4 @@ window.onresize = () => {
 
 window.onresize(null);
 
-export {elements, updateCircuit}
-export {COLORS};
+export {elements, updateCircuit, COLORS}

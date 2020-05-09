@@ -8,6 +8,9 @@ class LogicElement {
   inputOffsets = [];
   image;
   svgLocation;
+  get imagePosition() {
+    return [this.x - this.image.width / 2, this.y - this.image.height / 2];
+  }
 
   constructor(x, y, ...inputFrom) {
     this.inputFrom = inputFrom;
@@ -43,8 +46,8 @@ class LogicElement {
         this.image = new Image();
         this.image.src = this.svgLocation;
 
-        this.image.onload = () => ctx.drawImage(this.image, this.x - this.image.width / 2, this.y - this.image.height / 2);
-      } else ctx.drawImage(this.image, this.x - this.image.width / 2, this.y - this.image.height / 2);
+        this.image.onload = () => ctx.drawImage(this.image, this.imagePosition[0], this.imagePosition[1]);
+      } else ctx.drawImage(this.image, this.imagePosition[0], this.imagePosition[1]);
     }
   }
 }
