@@ -6,6 +6,7 @@ class LogicElement {
   y;
   outputOffset = [0, 0];
   inputOffsets = [];
+  highlighted;
   image;
   svgLocation;
   get imagePosition() {
@@ -48,6 +49,11 @@ class LogicElement {
 
         this.image.onload = () => ctx.drawImage(this.image, this.imagePosition[0], this.imagePosition[1]);
       } else ctx.drawImage(this.image, this.imagePosition[0], this.imagePosition[1]);
+
+      if(this.highlighted) {
+        ctx.strokeStyle = COLORS.highlight;
+        ctx.strokeRect(this.imagePosition[0], this.imagePosition[1], this.image.width, this.image.height);
+      }
     }
   }
 }

@@ -1,9 +1,9 @@
-import {elements, updateCircuit} from "./render.js";
+import {elements, canvas, updateCircuit} from "./render.js";
 
 let selectedElement;
 let selectionMoving;
 
-addEventListener("mousedown", e => {
+canvas.addEventListener("mousedown", e => {
   if(!selectionMoving) {
     const found = elements.filter(it => (
       (it.image)
@@ -14,13 +14,21 @@ addEventListener("mousedown", e => {
     )).pop();
 
     if(found) {
+      if(selectedElement) selectedElement.highlighted = false;
+      found.highlighted = true;
+
       selectedElement = found;
       selectionMoving = true;
+    } else {
+      if(selectedElement) selectedElement.highlighted = false;
+      selectedElement = undefined;
     }
+
+    dispatchEvent(updateCircuit);
   }
 });
 
-addEventListener("mousemove", e => {
+canvas.addEventListener("mousemove", e => {
   if(selectedElement && selectionMoving) {
     selectedElement.x = e.clientX;
     selectedElement.y = e.clientY;
@@ -29,6 +37,6 @@ addEventListener("mousemove", e => {
   }
 });
 
-addEventListener("mouseup", e => {
+canvas.addEventListener("mouseup", () => {
   if(selectionMoving) selectionMoving = false;
 });
