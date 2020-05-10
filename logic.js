@@ -51,7 +51,7 @@ class LogicElement {
       } else ctx.drawImage(this.image, this.imagePosition[0], this.imagePosition[1]);
 
       if(this.highlighted) {
-        ctx.strokeStyle = COLORS.highlight;
+        ctx.strokeStyle = COLORS.highlightMain;
         ctx.strokeRect(this.imagePosition[0], this.imagePosition[1], this.image.width, this.image.height);
       }
     }

@@ -2,7 +2,7 @@ const COLORS = {
   black: "black",
   high: "gold",
   low: "gray",
-  highlight: "lightblue"
+  highlightMain: "lightblue"
 }
 
 const canvas = document.getElementById("main");
