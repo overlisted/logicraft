@@ -2,36 +2,45 @@ import {elements, canvas, updateCircuit} from "./render.js";
 
 let selectedElement;
 let selectionMoving;
+let selectingInput;
 
 const controlsTag = document.getElementById("element-controls");
 const buttonDestroy = document.getElementById("destroy-element");
-
-function selectInput(element) {
-
-}
 
 function select(element) {
   if(selectedElement) selectedElement.highlighted = false;
   element.highlighted = true;
 
   const inputsTag = document.getElementById("element-inputs");
-  inputsTag.append(element.inputOffsets.map((it, i) => {
+  inputsTag.innerHTML = "";
+
+  element.inputFrom.forEach((it, i) => {
     const buttonSelectInput = document.createElement("button");
 
     buttonSelectInput.innerText = `Select input #${i + 1}`;
 
-    buttonSelectInput.addEventListener("click", () => selectInput(element));
-    buttonDestroy.addEventListener("click", () => {
+    function selectInputListener() {
+      buttonSelectInput.removeEventListener("click", selectInputListener);
+
+      selectingInput = {element: element, index: i}
+    }
+
+    function destroyListener() {
+      buttonSelectInput.removeEventListener("click", destroyListener);
+
       elements.splice(elements.indexOf(element));
       deselect(element);
-    })
+    }
 
-    return buttonSelectInput;
-  }));
+    buttonSelectInput.addEventListener("click", selectInputListener);
+    buttonDestroy.addEventListener("click", destroyListener)
 
-  controlsTag.hidden = false;
+    inputsTag.appendChild(buttonSelectInput);
+  })
 
   selectedElement = element;
+  controlsTag.hidden = false;
+
   dispatchEvent(updateCircuit);
 }
 
@@ -44,7 +53,6 @@ function clearSelection() {
   if(selectedElement) deselect(selectedElement);
 
   controlsTag.hidden = true;
-
   selectedElement = undefined;
 }
 
@@ -58,11 +66,19 @@ canvas.addEventListener("mousedown", e => {
       && (it.imagePosition[1] + it.image.height > e.clientY)
     )).pop();
 
-    if(found) {
-      select(found);
-      selectionMoving = true;
+    if(found && found !== selectedElement) {
+      if(selectingInput) {
+        selectingInput.element.inputFrom[selectingInput.index] = found;
+        selectingInput = undefined;
+
+        dispatchEvent(updateCircuit);
+      } else {
+        select(found);
+        selectionMoving = true;
+      }
     } else {
-      clearSelection()
+      selectingInput = false;
+      clearSelection();
     }
   }
 });
