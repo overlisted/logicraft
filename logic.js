@@ -1,4 +1,5 @@
 import {COLORS} from "./render.js"
+import {updateCircuit} from "./render.js";
 
 class LogicElement {
   destroyed = false;
@@ -65,6 +66,8 @@ class LogicElement {
       ctx.strokeRect(this.imagePosition[0], this.imagePosition[1], this.image.width, this.image.height);
     }
   }
+
+  onclick(e) {}
 }
 
 class PlayerInput extends LogicElement {
@@ -76,7 +79,7 @@ class PlayerInput extends LogicElement {
     super(0, x, y, undefined);
   }
 
-  invert() {
+  toggle() {
     this.output = !this.output;
   }
 
@@ -90,6 +93,13 @@ class PlayerInput extends LogicElement {
   }
 
   renderWires(ctx) {}
+
+  onclick(e) {
+    if(e.ctrlKey && e.button === 0) {
+      this.toggle();
+      dispatchEvent(updateCircuit);
+    }
+  }
 }
 
 class Diode extends LogicElement {

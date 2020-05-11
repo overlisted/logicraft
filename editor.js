@@ -97,7 +97,6 @@ function clearSelection() {
   dispatchEvent(updateCircuit);
 }
 
-
 canvas.addEventListener("mousedown", e => {
   if(e.button === 0 && !selectionMoving) {
     const found = elements.filter(it => (
@@ -136,3 +135,16 @@ canvas.addEventListener("mousemove", e => {
 canvas.addEventListener("mouseup", () => {
   if(selectionMoving) selectionMoving = false;
 });
+
+canvas.addEventListener("click", e => {
+  const found = elements.filter(it => (
+    (it.imagePosition[0] <= e.clientX)
+    && (it.imagePosition[1] <= e.clientY)
+    && (it.imagePosition[0] + it.image.width > e.clientX)
+    && (it.imagePosition[1] + it.image.height > e.clientY)
+  )).pop();
+
+  if(found) {
+    found.onclick(e);
+  }
+})

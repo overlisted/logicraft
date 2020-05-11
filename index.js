@@ -16,10 +16,10 @@ elements.push(new logic.Lamp(430, 420, elements[8]));
 dispatchEvent(updateCircuit);
 
 window.addEventListener("keydown", e => {
-  if(e.code === "Digit1") elements[0].invert();
-  if(e.code === "Digit2") elements[1].invert();
-  if(e.code === "Digit3") elements[3].invert();
-  if(e.code === "Digit4") elements[4].invert();
+  if(e.code === "Digit1") elements[0].toggle();
+  if(e.code === "Digit2") elements[1].toggle();
+  if(e.code === "Digit3") elements[3].toggle();
+  if(e.code === "Digit4") elements[4].toggle();
 
   dispatchEvent(updateCircuit);
 });
