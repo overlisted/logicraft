@@ -7,7 +7,7 @@ class LogicElement {
   outputOffset = [0, 0];
   inputOffsets = [];
   highlighted;
-  image;
+  image = new Image();
   svgLocation;
   get imagePosition() {
     return [this.x - this.image.width / 2, this.y - this.image.height / 2];
@@ -42,18 +42,15 @@ class LogicElement {
   }
 
   render(ctx) {
-    if(this.svgLocation) {
-      if(!this.image) {
-        this.image = new Image();
-        this.image.src = this.svgLocation;
+    if(!this.image.src && this.svgLocation) {
+      this.image.src = this.svgLocation;
 
-        this.image.onload = () => ctx.drawImage(this.image, this.imagePosition[0], this.imagePosition[1]);
-      } else ctx.drawImage(this.image, this.imagePosition[0], this.imagePosition[1]);
+      this.image.onload = () => ctx.drawImage(this.image, this.imagePosition[0], this.imagePosition[1]);
+    } else ctx.drawImage(this.image, this.imagePosition[0], this.imagePosition[1]);
 
-      if(this.highlighted) {
-        ctx.strokeStyle = COLORS.highlightMain;
-        ctx.strokeRect(this.imagePosition[0], this.imagePosition[1], this.image.width, this.image.height);
-      }
+    if(this.highlighted) {
+      ctx.strokeStyle = COLORS.highlightMain;
+      ctx.strokeRect(this.imagePosition[0], this.imagePosition[1], this.image.width, this.image.height);
     }
   }
 }
@@ -61,6 +58,7 @@ class LogicElement {
 class PlayerInput extends LogicElement {
   output = false;
   outputOffset = [15, 0];
+  image = new Image(30, 30);
 
   constructor(x, y) {
     super(x, y, undefined);
@@ -75,6 +73,8 @@ class PlayerInput extends LogicElement {
     ctx.fillRect(this.x - 15, this.y - 15, 30, 30);
     ctx.fillStyle = COLORS.black;
     ctx.fillRect(this.x - 10, this.y - 10, 20, 20);
+
+    super.render(ctx);
   }
 
   renderWires(ctx) {}
@@ -142,6 +142,7 @@ class XOR extends LogicElement {
 
 class Lamp extends LogicElement {
   inputOffsets = [[-15, 0]];
+  image = new Image(30, 30);
 
   get isLit() {
     return this.inputFrom[0].output;
@@ -152,6 +153,8 @@ class Lamp extends LogicElement {
     ctx.fillRect(this.x - 15, this.y - 15, 30, 30);
     ctx.fillStyle = this.isLit ? COLORS.high : COLORS.low;
     ctx.fillRect(this.x - 10, this.y - 10, 20, 20);
+
+    super.render(ctx);
   }
 }
 

@@ -59,8 +59,7 @@ function clearSelection() {
 canvas.addEventListener("mousedown", e => {
   if(!selectionMoving) {
     const found = elements.filter(it => (
-      (it.image)
-      && (it.imagePosition[0] <= e.clientX)
+      (it.imagePosition[0] <= e.clientX)
       && (it.imagePosition[1] <= e.clientY)
       && (it.imagePosition[0] + it.image.width > e.clientX)
       && (it.imagePosition[1] + it.image.height > e.clientY)
