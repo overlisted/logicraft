@@ -13,16 +13,23 @@ class LogicElement {
     return [this.x - this.image.width / 2, this.y - this.image.height / 2];
   }
 
-  constructor(x, y, ...inputFrom) {
-    this.inputFrom = inputFrom;
+  constructor(inputsCount, x, y, inputFrom) {
+    if(inputFrom && inputFrom.length) {
+      this.inputFrom = inputFrom;
+    } else {
+      this.inputFrom = new Array(inputsCount);
+    }
+
     this.x = x;
     this.y = y;
 
-    if(this.inputOffsets.length === 0) for(let i = 0; i < inputFrom.length; i++) this.inputOffsets[i] = [0, 0];
+    if(this.inputOffsets.length === 0) for(let i = 0; i < inputsCount; i++) this.inputOffsets[i] = [0, 0];
   }
 
   renderWires(ctx) {
     for(const [index, connection] of this.inputFrom.entries()) {
+      if(!connection) continue;
+
       ctx.beginPath();
       ctx.strokeStyle = connection.output ? COLORS.high : COLORS.low;
       ctx.moveTo(this.x + this.inputOffsets[index][0], this.y + this.inputOffsets[index][1]);
@@ -61,7 +68,7 @@ class PlayerInput extends LogicElement {
   image = new Image(30, 30);
 
   constructor(x, y) {
-    super(x, y, undefined);
+    super(0, x, y, undefined);
   }
 
   invert() {
@@ -86,6 +93,10 @@ class Diode extends LogicElement {
 
   svgLocation = "svg/diode.svg"
 
+  constructor(x, y, ...inputFrom) {
+    super(1, x, y, inputFrom);
+  }
+
   get output() {
     return this.inputFrom[0].output;
   };
@@ -97,6 +108,10 @@ class NOT extends LogicElement {
 
   svgLocation = "svg/not.svg"
 
+  constructor(x, y, ...inputFrom) {
+    super(1, x, y, inputFrom);
+  }
+
   get output() {
     return !this.inputFrom[0].output;
   };
@@ -107,6 +122,10 @@ class OR extends LogicElement {
   inputOffsets = [[-18, -3], [-18, 3]];
 
   svgLocation = "svg/or.svg"
+
+  constructor(x, y, ...inputFrom) {
+    super(2, x, y, inputFrom);
+  }
 
   get output() {
     for(const it of this.inputFrom) if(it.output) return true;
@@ -120,6 +139,10 @@ class AND extends LogicElement {
 
   svgLocation = "svg/and.svg"
 
+  constructor(x, y, ...inputFrom) {
+    super(2, x, y, inputFrom);
+  }
+
   get output() {
     for(const it of this.inputFrom) if(!it.output) return false;
     return true;
@@ -131,6 +154,10 @@ class XOR extends LogicElement {
   inputOffsets = [[-18, -3], [-18, 3]];
 
   svgLocation = "svg/xor.svg"
+
+  constructor(x, y, ...inputFrom) {
+    super(2, x, y, inputFrom);
+  }
 
   get output() {
     let highBits = 0;
@@ -146,6 +173,10 @@ class Lamp extends LogicElement {
 
   get isLit() {
     return this.inputFrom[0].output;
+  }
+
+  constructor(x, y, ...inputFrom) {
+    super(1, x, y, inputFrom);
   }
 
   render(ctx) {

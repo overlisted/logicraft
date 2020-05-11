@@ -1,8 +1,14 @@
 import {elements, canvas, updateCircuit} from "./render.js";
+import * as logic from "./logic.js"
 
 let selectedElement;
 let selectionMoving;
 let selectingInput;
+
+document.getElementById("new-xor").onclick = () => {
+  elements.push(new logic.XOR(window.innerWidth / 2, window.innerHeight / 2));
+  dispatchEvent(updateCircuit);
+};
 
 const controlsTag = document.getElementById("element-controls");
 const buttonDestroy = document.getElementById("destroy-element");
@@ -14,7 +20,7 @@ function select(element) {
   const inputsTag = document.getElementById("element-inputs");
   inputsTag.innerHTML = "";
 
-  element.inputFrom.forEach((it, i) => {
+  for(let i = 0; i < element.inputFrom.length; i++) {
     const buttonSelectInput = document.createElement("button");
 
     buttonSelectInput.innerText = `Select input #${i + 1}`;
@@ -36,7 +42,7 @@ function select(element) {
     buttonDestroy.addEventListener("click", destroyListener)
 
     inputsTag.appendChild(buttonSelectInput);
-  })
+  }
 
   selectedElement = element;
   controlsTag.hidden = false;

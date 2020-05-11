@@ -7,3 +7,11 @@ body {
 .window {
   position: absolute;
 }
+
+#element-controls {
+  top: 0;
+}
+
+#new-element-buttons {
+  bottom: 0;
+}
