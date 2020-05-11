@@ -113,6 +113,8 @@ class Diode extends LogicElement {
   }
 
   get output() {
+    if(this.inputFrom.includes(undefined)) return false;
+
     return this.inputFrom[0].output;
   };
 }
@@ -128,6 +130,8 @@ class NOT extends LogicElement {
   }
 
   get output() {
+    if(this.inputFrom.includes(undefined)) return false;
+
     return !this.inputFrom[0].output;
   };
 }
@@ -143,6 +147,8 @@ class OR extends LogicElement {
   }
 
   get output() {
+    if(this.inputFrom.includes(undefined)) return false;
+
     for(const it of this.inputFrom) if(it.output) return true;
     return false;
   };
@@ -159,6 +165,8 @@ class AND extends LogicElement {
   }
 
   get output() {
+    if(this.inputFrom.includes(undefined)) return false;
+
     for(const it of this.inputFrom) if(!it.output) return false;
     return true;
   };
@@ -175,6 +183,8 @@ class XOR extends LogicElement {
   }
 
   get output() {
+    if(this.inputFrom.includes(undefined)) return false;
+
     let highBits = 0;
     for(const it of this.inputFrom) if(it.output) highBits++;
 
@@ -187,6 +197,8 @@ class Lamp extends LogicElement {
   image = new Image(30, 30);
 
   get isLit() {
+    if(this.inputFrom.includes(undefined)) return false;
+
     return this.inputFrom[0].output;
   }
 
