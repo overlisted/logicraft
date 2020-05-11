@@ -1,6 +1,7 @@
 import {COLORS} from "./render.js"
 
 class LogicElement {
+  destroyed = false;
   inputFrom;
   x;
   y;
@@ -27,8 +28,12 @@ class LogicElement {
   }
 
   renderWires(ctx) {
-    for(const [index, connection] of this.inputFrom.entries()) {
+    for(let [index, connection] of this.inputFrom.entries()) {
       if(!connection) continue;
+      if(connection.destroyed) {
+        connection = undefined;
+        continue;
+      }
 
       ctx.beginPath();
       ctx.strokeStyle = connection.output ? COLORS.high : COLORS.low;
