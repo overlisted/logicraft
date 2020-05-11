@@ -5,6 +5,55 @@ let selectedElement;
 let selectionMoving;
 let selectingInput;
 
+let truthTableEnabled = false;
+
+const truthTable = document.querySelector("#truth-table");
+
+document
+  .getElementById("truth-table-enable")
+  .addEventListener("click", () => {
+    truthTableEnabled = !truthTableEnabled;
+    dispatchEvent(updateCircuit);
+  })
+
+addEventListener("circuitUpdate", () => {
+  truthTable.innerHTML = "";
+  if(truthTableEnabled) {
+    const elementsCopy = [...elements];
+
+    let inputsOutput = 0;
+
+    const allInputs = elementsCopy.filter(it => it instanceof logic.PlayerInput);
+    const allLamps = elementsCopy.filter(it => it instanceof logic.Lamp);
+    const rows = allInputs.length * allLamps.length;
+
+    for(let i = 0; i < rows; i++) {
+      const row = document.createElement("tr");
+
+      for(const lamp of allLamps) {
+        for(let [index, input] of allInputs.entries()) {
+          input.output = (inputsOutput >> index) & 1;
+          console.log(Math.random(), input.output)
+        }
+
+        inputsOutput++;
+      }
+
+      let cell;
+
+      cell = document.createElement("td");
+      cell.innerText = allInputs.map(it => it.output ? "0" : "1").join(", ");
+      row.appendChild(cell);
+
+      cell = document.createElement("td");
+      cell.innerText = allLamps.map(it => it.isLit ? "0" : "1").join(", ");
+      row.appendChild(cell);
+
+      truthTable.appendChild(row);
+    }
+  }
+});
+
 for(const title of document.getElementsByClassName("window-title")) {
   title.parentElement.style.left = 0;
   title.parentElement.style.top = 0;

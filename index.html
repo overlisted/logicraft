@@ -1,5 +1,6 @@
 <html lang="en">
   <head>
+    <meta charset="UTF-8">
     <title>Logicraft</title>
     <script type="module" defer="defer" src="index.js"></script>
     <link rel="stylesheet" href="index.css">
@@ -11,6 +12,16 @@
       <div class="window-content">
         <button id="destroy-element">Destroy element</button>
         <div id="element-inputs"></div>
+      </div>
+    </div>
+
+    <div id="truth-table-window" class="window">
+      <span class="window-title">Truth table</span>
+      <div class="window-content">
+        <input id="truth-table-enable" type="checkbox">
+        <label for="truth-table-enable">Enable truth table (may decrease performance)</label>
+
+        <table id="truth-table"></table>
       </div>
     </div>
 

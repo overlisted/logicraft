@@ -1,5 +1,6 @@
 * {
   font-family: "Segoe UI", sans-serif;
+  color: whitesmoke;
 }
 
 body {
@@ -16,7 +17,6 @@ body {
 .window-title {
   display: block;
   background-color: #252525;
-  color: whitesmoke;
   font-size: 20px;
   font-weight: bold;
   padding: 5px;
@@ -30,6 +30,34 @@ body {
 }
 
 button {
+  background-color: #252525;
+  font-size: 16px;
+  border-style: solid;
+  border-color: #353535;
   padding: 0 3px 0 3px;
   margin: 3px;
+}
+
+button:focus {
+  outline: none;
+}
+
+button:active {
+  background-color: #202020;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #252525;
+}
+
+td, th {
+  border: 3px solid #404040;
+  text-align: left;
+  padding: 5px;
+}
+
+#truth-table-window {
+  max-height: 600px;
 }
