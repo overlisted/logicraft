@@ -5,8 +5,38 @@ let selectedElement;
 let selectionMoving;
 let selectingInput;
 
+document.getElementById("new-input").onclick = () => {
+  elements.push(new logic.PlayerInput(window.innerWidth / 2, window.innerHeight / 2));
+  dispatchEvent(updateCircuit);
+};
+
+document.getElementById("new-diode").onclick = () => {
+  elements.push(new logic.Diode(window.innerWidth / 2, window.innerHeight / 2));
+  dispatchEvent(updateCircuit);
+};
+
+document.getElementById("new-not").onclick = () => {
+  elements.push(new logic.NOT(window.innerWidth / 2, window.innerHeight / 2));
+  dispatchEvent(updateCircuit);
+};
+
+document.getElementById("new-or").onclick = () => {
+  elements.push(new logic.OR(window.innerWidth / 2, window.innerHeight / 2));
+  dispatchEvent(updateCircuit);
+};
+
+document.getElementById("new-and").onclick = () => {
+  elements.push(new logic.AND(window.innerWidth / 2, window.innerHeight / 2));
+  dispatchEvent(updateCircuit);
+};
+
 document.getElementById("new-xor").onclick = () => {
   elements.push(new logic.XOR(window.innerWidth / 2, window.innerHeight / 2));
+  dispatchEvent(updateCircuit);
+};
+
+document.getElementById("new-lamp").onclick = () => {
+  elements.push(new logic.Lamp(window.innerWidth / 2, window.innerHeight / 2));
   dispatchEvent(updateCircuit);
 };
 
@@ -35,7 +65,7 @@ function select(element) {
       buttonSelectInput.removeEventListener("click", destroyListener);
 
       elements.splice(elements.indexOf(element));
-      deselect(element);
+      clearSelection();
     }
 
     buttonSelectInput.addEventListener("click", selectInputListener);
@@ -52,7 +82,6 @@ function select(element) {
 
 function deselect(element) {
   element.highlighted = false;
-  dispatchEvent(updateCircuit);
 }
 
 function clearSelection() {
@@ -60,6 +89,8 @@ function clearSelection() {
 
   controlsTag.hidden = true;
   selectedElement = undefined;
+
+  dispatchEvent(updateCircuit);
 }
 
 
