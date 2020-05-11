@@ -64,7 +64,11 @@ function select(element) {
     function destroyListener() {
       buttonSelectInput.removeEventListener("click", destroyListener);
 
-      elements.splice(elements.indexOf(element));
+      if(!element.destroyed) {
+        elements.splice(elements.indexOf(element), 1);
+        element.destroyed = true;
+      }
+
       clearSelection();
     }
 
