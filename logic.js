@@ -149,8 +149,7 @@ class OR extends LogicElement {
   get output() {
     if(this.inputFrom.includes(undefined)) return false;
 
-    for(const it of this.inputFrom) if(it.output) return true;
-    return false;
+    return this.inputFrom[0].output | this.inputFrom[1].output;
   };
 }
 
@@ -167,8 +166,7 @@ class AND extends LogicElement {
   get output() {
     if(this.inputFrom.includes(undefined)) return false;
 
-    for(const it of this.inputFrom) if(!it.output) return false;
-    return true;
+    return this.inputFrom[0].output & this.inputFrom[1].output;
   };
 }
 
@@ -185,10 +183,7 @@ class XOR extends LogicElement {
   get output() {
     if(this.inputFrom.includes(undefined)) return false;
 
-    let highBits = 0;
-    for(const it of this.inputFrom) if(it.output) highBits++;
-
-    return highBits === 1;
+    return this.inputFrom[0].output ^ this.inputFrom[1].output;
   };
 }
 
