@@ -7,18 +7,24 @@
 
   <body>
     <div id="element-controls" class="window" hidden>
-      <button id="destroy-element">Destroy element</button>
-      <div id="element-inputs"></div>
+      <span class="window-title">Controls</span>
+      <div class="window-content">
+        <button id="destroy-element">Destroy element</button>
+        <div id="element-inputs"></div>
+      </div>
     </div>
 
     <div id="new-element-buttons" class="window">
-      <button id="new-input">New input</button>
-      <button id="new-diode">New diode</button>
-      <button id="new-not">New NOT</button>
-      <button id="new-or">New OR</button>
-      <button id="new-and">New AND</button>
-      <button id="new-xor">New XOR</button>
-      <button id="new-lamp">New lamp</button>
+      <span class="window-title">Add an element</span>
+      <div class="window-content">
+        <button id="new-input">New input</button>
+        <button id="new-diode">New diode</button>
+        <button id="new-not">New NOT</button>
+        <button id="new-or">New OR</button>
+        <button id="new-and">New AND</button>
+        <button id="new-xor">New XOR</button>
+        <button id="new-lamp">New lamp</button>
+      </div>
     </div>
 
     <canvas id="main"></canvas>

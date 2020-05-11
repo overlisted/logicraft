@@ -5,6 +5,30 @@ let selectedElement;
 let selectionMoving;
 let selectingInput;
 
+for(const title of document.getElementsByClassName("window-title")) {
+  title.parentElement.style.left = 0;
+  title.parentElement.style.top = 0;
+
+  title.addEventListener("mousedown", e => {
+    e.target.dragging = true;
+  });
+
+  title.addEventListener("mousemove", e => {
+    if(e.target.dragging) {
+      e.target.parentElement.style.left = parseInt(e.target.parentElement.style.left) + e.movementX;
+      e.target.parentElement.style.top = parseInt(e.target.parentElement.style.top) + e.movementY;
+    }
+  });
+
+  title.addEventListener("mouseup", e => {
+    e.target.dragging = false;
+  });
+
+  title.addEventListener("mouseleave", e => {
+    e.target.dragging = false;
+  });
+}
+
 document.getElementById("new-input").onclick = () => {
   elements.push(new logic.PlayerInput(window.innerWidth / 2, window.innerHeight / 2));
   dispatchEvent(updateCircuit);

@@ -1,3 +1,7 @@
+* {
+  font-family: "Segoe UI", sans-serif;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -6,12 +10,26 @@ body {
 
 .window {
   position: absolute;
+  width: 200px;
 }
 
-#element-controls {
-  top: 0;
+.window-title {
+  display: block;
+  background-color: #252525;
+  color: whitesmoke;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 5px;
+  text-align: center;
+  user-select: none;
 }
 
-#new-element-buttons {
-  bottom: 0;
+.window-content {
+  background-color: #404040;
+  padding: 5px;
+}
+
+button {
+  padding: 0 3px 0 3px;
+  margin: 3px;
 }
