@@ -115,6 +115,7 @@ document.getElementById("new-lamp").onclick = () => {
 
 const controlsTag = document.getElementById("element-controls");
 const buttonDestroy = document.getElementById("destroy-element");
+const buttonClone = document.getElementById("clone-element");
 
 function select(element) {
   if(selectedElement) selectedElement.highlighted = false;
@@ -145,8 +146,19 @@ function select(element) {
       clearSelection();
     }
 
+    function cloneListener() {
+      buttonSelectInput.removeEventListener("click", cloneListener);
+
+      const cloned = Object.assign({}, element);
+      cloned.__proto__ = element.__proto__;
+
+      elements.push(cloned);
+      select(cloned);
+    }
+
     buttonSelectInput.addEventListener("click", selectInputListener);
-    buttonDestroy.addEventListener("click", destroyListener)
+    buttonDestroy.addEventListener("click", destroyListener);
+    buttonClone.addEventListener("click", cloneListener);
 
     inputsTag.appendChild(buttonSelectInput);
   }
