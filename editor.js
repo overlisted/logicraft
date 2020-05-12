@@ -117,6 +117,24 @@ const controlsTag = document.getElementById("element-controls");
 const buttonDestroy = document.getElementById("destroy-element");
 const buttonClone = document.getElementById("clone-element");
 
+function destroyListener() {
+  selectedElement.destroyed = true;
+  elements.splice(elements.indexOf(selectedElement), 1);
+
+  clearSelection();
+}
+
+function cloneListener() {
+  const cloned = Object.assign({}, selectedElement);
+  cloned.__proto__ = selectedElement.__proto__;
+
+  elements.push(cloned);
+  select(cloned);
+}
+
+buttonDestroy.addEventListener("click", destroyListener);
+buttonClone.addEventListener("click", cloneListener);
+
 function select(element) {
   if(selectedElement) selectedElement.highlighted = false;
   element.highlighted = true;
@@ -132,33 +150,10 @@ function select(element) {
     function selectInputListener() {
       buttonSelectInput.removeEventListener("click", selectInputListener);
 
-      selectingInput = {element: element, index: i}
-    }
-
-    function destroyListener() {
-      buttonSelectInput.removeEventListener("click", destroyListener);
-
-      if(!element.destroyed) {
-        elements.splice(elements.indexOf(element), 1);
-        element.destroyed = true;
-      }
-
-      clearSelection();
-    }
-
-    function cloneListener() {
-      buttonSelectInput.removeEventListener("click", cloneListener);
-
-      const cloned = Object.assign({}, element);
-      cloned.__proto__ = element.__proto__;
-
-      elements.push(cloned);
-      select(cloned);
+      selectingInput = {element: selectedElement, index: i}
     }
 
     buttonSelectInput.addEventListener("click", selectInputListener);
-    buttonDestroy.addEventListener("click", destroyListener);
-    buttonClone.addEventListener("click", cloneListener);
 
     inputsTag.appendChild(buttonSelectInput);
   }
