@@ -1,6 +1,4 @@
-import {COLORS} from "./render.js"
-import {updateCircuit} from "./render.js";
-import {elements} from "./render.js";
+import {COLORS, updateCircuit} from "./render.js"
 
 class LogicElement {
   destroyed = false;
@@ -184,13 +182,5 @@ class Lamp extends LogicElement {
     super.render(ctx);
   }
 }
-
-elements.push(new PlayerInput(500, 500));
-elements.push(new PlayerInput(500, 600));
-elements.push(new XOR(550, 550));
-elements.push(new Lamp(650, 500));
-
-elements[2].inputs = [{element: elements[0], index: 0}, {element: elements[1], index: 0}]
-elements[3].inputs = [{element: elements[2], index: 0}];
 
 export {LogicElement, PlayerInput, Diode, NOT, OR, AND, XOR, Lamp};
