@@ -32,8 +32,8 @@ addEventListener("circuitUpdate", () => {
 
       for(const lamp of allLamps) {
         for(let [index, input] of allInputs.entries()) {
-          input.output = (inputsOutput >> index) & 1;
-          console.log(Math.random(), input.output)
+          input.outputs[0] = (inputsOutput >> index) & 1;
+          console.log(Math.random(), input.outputs[0])
         }
 
         inputsOutput++;
@@ -42,11 +42,11 @@ addEventListener("circuitUpdate", () => {
       let cell;
 
       cell = document.createElement("td");
-      cell.innerText = allInputs.map(it => it.output ? "0" : "1").join(", ");
+      cell.innerText = allInputs.map(it => it.outputs[0] ? "0" : "1").join(", ");
       row.appendChild(cell);
 
       cell = document.createElement("td");
-      cell.innerText = allLamps.map(it => it.isLit ? "0" : "1").join(", ");
+      cell.innerText = allLamps.map(it => it.outputs[0] ? "0" : "1").join(", ");
       row.appendChild(cell);
 
       truthTable.appendChild(row);
@@ -142,7 +142,7 @@ function select(element) {
   const inputsTag = document.getElementById("element-inputs");
   inputsTag.innerHTML = "";
 
-  for(let i = 0; i < element.inputFrom.length; i++) {
+  for(let i = 0; i < element.inputs.length; i++) {
     const buttonSelectInput = document.createElement("button");
 
     buttonSelectInput.innerText = `Select input #${i + 1}`;
@@ -178,28 +178,26 @@ function clearSelection() {
 }
 
 canvas.addEventListener("mousedown", e => {
-  if(e.button === 0 && !selectionMoving) {
-    const found = elements.filter(it => (
-      (it.imagePosition[0] <= e.clientX)
-      && (it.imagePosition[1] <= e.clientY)
-      && (it.imagePosition[0] + it.image.width > e.clientX)
-      && (it.imagePosition[1] + it.image.height > e.clientY)
-    )).pop();
+  const found = elements.filter(it => (
+    (it.framePosX <= e.clientX)
+    && (it.framePosY <= e.clientY)
+    && (it.framePosX + it.width > e.clientX)
+    && (it.framePosY + it.height > e.clientY)
+  )).pop();
 
-    if(found && found !== selectedElement) {
-      if(selectingInput) {
-        selectingInput.element.inputFrom[selectingInput.index] = found;
-        selectingInput = undefined;
+  if(found && found !== selectedElement) {
+    if(selectingInput) {
+      selectingInput.element.inputs[selectingInput.index] = {element: found, index: 0};
+      selectingInput = undefined;
 
-        dispatchEvent(updateCircuit);
-      } else {
-        select(found);
-        selectionMoving = true;
-      }
+      dispatchEvent(updateCircuit);
     } else {
-      selectingInput = false;
-      clearSelection();
+      select(found);
+      selectionMoving = true;
     }
+  } else {
+    selectingInput = undefined;
+    clearSelection();
   }
 });
 
@@ -218,10 +216,10 @@ canvas.addEventListener("mouseup", () => {
 
 canvas.addEventListener("click", e => {
   const found = elements.filter(it => (
-    (it.imagePosition[0] <= e.clientX)
-    && (it.imagePosition[1] <= e.clientY)
-    && (it.imagePosition[0] + it.image.width > e.clientX)
-    && (it.imagePosition[1] + it.image.height > e.clientY)
+    (it.framePosX <= e.clientX)
+    && (it.framePosY <= e.clientY)
+    && (it.framePosX + it.width > e.clientX)
+    && (it.framePosY + it.height > e.clientY)
   )).pop();
 
   if(found) {
