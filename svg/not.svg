@@ -1,66 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="45"
-   height="45"
-   version="1.1"
-   id="svg218"
-   sodipodi:docname="not.svg"
-   inkscape:version="1.0 (4035a4fb49, 2020-05-01)">
-  <metadata
-     id="metadata224">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <defs
-     id="defs222" />
-  <sodipodi:namedview
-     inkscape:document-rotation="0"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1241"
-     inkscape:window-height="667"
-     id="namedview220"
-     showgrid="true"
-     inkscape:zoom="11.603905"
-     inkscape:cx="33.632078"
-     inkscape:cy="28.906717"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="svg218">
-    <inkscape:grid
-       id="grid280"
-       type="xygrid" />
-  </sodipodi:namedview>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" version="1.1">
   <path
-     d="M 0,2.5356274 V 42.259689 L 1.8808532,41.317835 37.671581,23.588826 V 21.20649 L 1.8808532,3.477481 Z M 2.6168392,6.8016703 34.127945,22.397658 2.6168392,37.993646 Z"
-     style="stroke-width:0.879336;marker:none"
-     id="path214" />
+    d="M 0,2.5356274 V 42.259689 L 1.8808532,41.317835 37.671581,23.588826 V 21.20649 L 1.8808532,3.477481 Z M 2.6168392,6.8016703 34.127945,22.397658 2.6168392,37.993646 Z"
+    style="stroke-width:0.879336;marker:none"
+  />
+
   <path
-     fill="none"
-     stroke="#000000"
-     stroke-width="2.63802"
-     d="m 43.641245,22.397658 a 3.4891191,3.545802 0 1 1 -6.978238,0 3.4891191,3.545802 0 1 1 6.978238,0 z"
-     style="marker:none"
-     id="path216" />
+    fill="none"
+    stroke="#000000"
+    stroke-width="2.63802"
+    d="m 43.641245,22.397658 a 3.4891191,3.545802 0 1 1 -6.978238,0 3.4891191,3.545802 0 1 1 6.978238,0 z"
+    style="marker:none"
+  />
 </svg>
