@@ -40,7 +40,7 @@ class LogicElement {
       const input = connection.element;
 
       const fromPosX = input.framePosX + input.width;
-      const fromPosY = input.y;
+      const fromPosY = input.framePosY + (input.height / (input.outputs.length + 1) * (connection.index + 1));
 
       const posX = this.framePosX;
       const posY = this.framePosY + (this.height / (this.inputs.length + 1) * (index + 1));
