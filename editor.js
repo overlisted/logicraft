@@ -177,6 +177,8 @@ function clearSelection() {
   dispatchEvent(updateCircuit);
 }
 
+const outputSelectButtons = document.getElementById("output-select-buttons");
+
 canvas.addEventListener("mousedown", e => {
   const found = elements.filter(it => (
     (it.framePosX <= e.clientX)
@@ -187,8 +189,26 @@ canvas.addEventListener("mousedown", e => {
 
   if(found && found !== selectedElement) {
     if(selectingInput) {
-      selectingInput.element.inputs[selectingInput.index] = {element: found, index: 0};
-      selectingInput = undefined;
+      for(let i = 0; i < found.outputs.length; i++) {
+        const button = document.createElement("button");
+
+        button.className = "absolute-button";
+        button.innerText = `Use output #${i + 1}`;
+
+        button.style.left = found.framePosX + found.width;
+        button.style.top = found.framePosY + (found.height / (found.outputs.length + 1) * (i + 1));
+
+        button.addEventListener("click", () => {
+          outputSelectButtons.innerHTML = "";
+
+          selectingInput.element.inputs[selectingInput.index] = {element: found, index: i};
+          selectingInput = undefined;
+
+          dispatchEvent(updateCircuit);
+        });
+
+        outputSelectButtons.appendChild(button);
+      }
 
       dispatchEvent(updateCircuit);
     } else {
