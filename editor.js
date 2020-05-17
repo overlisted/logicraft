@@ -181,10 +181,10 @@ const outputSelectButtons = document.getElementById("output-select-buttons");
 
 canvas.addEventListener("mousedown", e => {
   const found = elements.filter(it => (
-    (it.framePosX <= e.clientX)
-    && (it.framePosY <= e.clientY)
-    && (it.framePosX + it.width > e.clientX)
-    && (it.framePosY + it.height > e.clientY)
+    (it.frameX <= e.clientX)
+    && (it.frameY <= e.clientY)
+    && (it.frameX + it.width > e.clientX)
+    && (it.frameY + it.height > e.clientY)
   )).pop();
 
   if(found && found !== selectedElement) {
@@ -195,8 +195,8 @@ canvas.addEventListener("mousedown", e => {
         button.className = "absolute-button";
         button.innerText = `Use output #${i + 1}`;
 
-        button.style.left = found.framePosX + found.width;
-        button.style.top = found.framePosY + (found.height / (found.outputs.length + 1) * (i + 1));
+        button.style.left = found.frameX + found.width;
+        button.style.top = found.frameY + (found.height / (found.outputs.length + 1) * (i + 1));
 
         button.addEventListener("click", () => {
           outputSelectButtons.innerHTML = "";
@@ -223,8 +223,7 @@ canvas.addEventListener("mousedown", e => {
 
 canvas.addEventListener("mousemove", e => {
   if(selectedElement && selectionMoving) {
-    selectedElement.x = e.clientX;
-    selectedElement.y = e.clientY;
+    selectedElement.ondrag({x: e.clientX, y: e.clientY});
 
     dispatchEvent(updateCircuit);
   }
@@ -236,10 +235,10 @@ canvas.addEventListener("mouseup", () => {
 
 canvas.addEventListener("click", e => {
   const found = elements.filter(it => (
-    (it.framePosX <= e.clientX)
-    && (it.framePosY <= e.clientY)
-    && (it.framePosX + it.width > e.clientX)
-    && (it.framePosY + it.height > e.clientY)
+    (it.frameX <= e.clientX)
+    && (it.frameY <= e.clientY)
+    && (it.frameX + it.width > e.clientX)
+    && (it.frameY + it.height > e.clientY)
   )).pop();
 
   if(found) {

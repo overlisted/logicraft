@@ -1,28 +1,25 @@
-import {COLORS, updateCircuit} from "./render.js"
+import {COLORS, updateCircuit, CanvasElement} from "./render.js"
 
-class LogicElement {
+class LogicElement extends CanvasElement {
   destroyed = false;
 
   inputs;
 
-  x;
-  y;
-
   highlighted;
 
-  svgLocation;
   height = 50;
   width = 50;
-  image = new Image();
 
-  get framePosX() { return this.x - this.width / 2; }
-  get framePosY() { return this.y - this.height / 2; }
-  get imagePosX() { return this.x - this.image.width / 2; }
-  get imagePosY() { return this.y - this.image.height / 2; }
+  get frameX() { return this.x - this.width / 2; }
+  get frameY() { return this.y - this.height / 2; }
+  get imageX() { return this.x - this.image.width / 2; }
+  get imageY() { return this.y - this.image.height / 2; }
 
   get inputValues() { return this.inputs.map(it => it.element ? it.element.outputs[it.index] : false); }
 
-  constructor(x, y, inputs = []) {
+  constructor(x, y, inputs, imageLocation = null) {
+    super(imageLocation);
+
     this.inputs = inputs;
 
     this.x = x;
@@ -39,11 +36,11 @@ class LogicElement {
 
       const input = connection.element;
 
-      const fromPosX = input.framePosX + input.width;
-      const fromPosY = input.framePosY + (input.height / (input.outputs.length + 1) * (connection.index + 1));
+      const fromPosX = input.frameX + input.width;
+      const fromPosY = input.frameY + (input.height / (input.outputs.length + 1) * (connection.index + 1));
 
-      const posX = this.framePosX;
-      const posY = this.framePosY + (this.height / (this.inputs.length + 1) * (index + 1));
+      const posX = this.frameX;
+      const posY = this.frameY + (this.height / (this.inputs.length + 1) * (index + 1));
 
       ctx.beginPath();
       ctx.strokeStyle = input.outputs[connection.index] ? COLORS.high : COLORS.low;
@@ -65,17 +62,16 @@ class LogicElement {
   }
 
   render(ctx) {
+    if(this.image) ctx.drawImage(this.image, this.imageX, this.imageY);
+
     ctx.strokeStyle = this.highlighted ? COLORS.highlightMain : COLORS.black;
-    ctx.strokeRect(this.framePosX, this.framePosY, this.width, this.height);
-
-    if(!this.image.src && this.svgLocation) {
-      this.image.src = this.svgLocation;
-
-      this.image.onload = () => ctx.drawImage(this.image, this.imagePosX, this.imagePosY);
-    } else ctx.drawImage(this.image, this.imagePosX, this.imagePosY);
+    ctx.strokeRect(this.frameX, this.frameY, this.width, this.height);
   }
 
-  onclick(e) {}
+  ondrag(e) {
+    this.x = e.x;
+    this.y = e.y;
+  }
 }
 
 class PlayerInput extends LogicElement {
@@ -90,7 +86,7 @@ class PlayerInput extends LogicElement {
 
   render(ctx) {
     ctx.fillStyle = this.outputs[0] ? COLORS.high : COLORS.low;
-    ctx.fillRect(this.framePosX, this.framePosY, this.width, this.height);
+    ctx.fillRect(this.frameX, this.frameY, this.width, this.height);
 
     super.render(ctx);
   }
@@ -104,10 +100,8 @@ class PlayerInput extends LogicElement {
 }
 
 class Diode extends LogicElement {
-  svgLocation = "svg/diode.svg"
-
   constructor(x, y) {
-    super(x, y, new Array(1));
+    super(x, y, new Array(1), "svg/diode.svg");
   }
 
   get outputs() {
@@ -116,10 +110,8 @@ class Diode extends LogicElement {
 }
 
 class NOT extends LogicElement {
-  svgLocation = "svg/not.svg"
-
   constructor(x, y) {
-    super(x, y, new Array(1));
+    super(x, y, new Array(1), "svg/not.svg");
   }
 
   get outputs() {
@@ -128,10 +120,8 @@ class NOT extends LogicElement {
 }
 
 class OR extends LogicElement {
-  svgLocation = "svg/or.svg"
-
   constructor(x, y) {
-    super(x, y, new Array(2));
+    super(x, y, new Array(2), "svg/or.svg");
   }
 
   get outputs() {
@@ -140,10 +130,8 @@ class OR extends LogicElement {
 }
 
 class AND extends LogicElement {
-  svgLocation = "svg/and.svg"
-
   constructor(x, y) {
-    super(x, y, new Array(2));
+    super(x, y, new Array(2), "svg/and.svg");
   }
 
   get outputs() {
@@ -152,10 +140,8 @@ class AND extends LogicElement {
 }
 
 class XOR extends LogicElement {
-  svgLocation = "svg/xor.svg"
-
   constructor(x, y) {
-    super(x, y, new Array(2));
+    super(x, y, new Array(2), "svg/xor.svg");
   }
 
   get outputs() {
@@ -177,7 +163,7 @@ class Lamp extends LogicElement {
 
   render(ctx) {
     ctx.fillStyle = this.outputs[0] ? COLORS.high : COLORS.low;
-    ctx.fillRect(this.framePosX, this.framePosY, this.width, this.height);
+    ctx.fillRect(this.frameX, this.frameY, this.width, this.height);
 
     super.render(ctx);
   }
