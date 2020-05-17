@@ -34,6 +34,8 @@ export class CanvasElement {
   x;
   y;
 
+  image;
+
   get imageX() {
     return this.x;
   }
@@ -45,12 +47,8 @@ export class CanvasElement {
   height;
   width;
 
-  constructor(imageLocation) {
-    if(imageLocation) {
-      this.image = new Image();
-      this.image.src = imageLocation;
-      this.image.onload = () => dispatchEvent(updateCircuit);
-    }
+  constructor(image) {
+    this.image = image;
   }
 
   render(context) {};

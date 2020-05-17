@@ -100,8 +100,10 @@ class PlayerInput extends LogicElement {
 }
 
 class Diode extends LogicElement {
+  static image = new Image();
+
   constructor(x, y) {
-    super(x, y, new Array(1), "svg/diode.svg");
+    super(x, y, new Array(1), Diode.image);
   }
 
   get outputs() {
@@ -110,8 +112,10 @@ class Diode extends LogicElement {
 }
 
 class NOT extends LogicElement {
+  static image = new Image();
+
   constructor(x, y) {
-    super(x, y, new Array(1), "svg/not.svg");
+    super(x, y, new Array(1), NOT.image);
   }
 
   get outputs() {
@@ -119,9 +123,13 @@ class NOT extends LogicElement {
   };
 }
 
+NOT.image.src = "svg/diode.svg";
+
 class OR extends LogicElement {
+  static image = new Image();
+
   constructor(x, y) {
-    super(x, y, new Array(2), "svg/or.svg");
+    super(x, y, new Array(2), OR.image);
   }
 
   get outputs() {
@@ -129,9 +137,13 @@ class OR extends LogicElement {
   };
 }
 
+OR.image.src = "svg/or.svg";
+
 class AND extends LogicElement {
+  static image = new Image();
+
   constructor(x, y) {
-    super(x, y, new Array(2), "svg/and.svg");
+    super(x, y, new Array(2), AND.image);
   }
 
   get outputs() {
@@ -139,15 +151,21 @@ class AND extends LogicElement {
   };
 }
 
+AND.image.src = "svg/and.svg";
+
 class XOR extends LogicElement {
+  static image = new Image();
+
   constructor(x, y) {
-    super(x, y, new Array(2), "svg/xor.svg");
+    super(x, y, new Array(2), XOR.image);
   }
 
   get outputs() {
     return [this.inputValues[0] ^ this.inputValues[1]];
   };
 }
+
+XOR.image.src = "svg/xor.svg";
 
 class Lamp extends LogicElement {
   width = 30;
